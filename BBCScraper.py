@@ -80,7 +80,3 @@ class BBCScraper:
 		if "http" in url:
 			return url
 		return self.base_url+url
-
-testscraper = BBCScraper()
-#testscraper.scrape_article("https://www.bbc.com/worklife/article/20200826-what-the-future-of-conferences-could-look-like")
-testscraper.scrape_news()

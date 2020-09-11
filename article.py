@@ -1,5 +1,6 @@
 import requests
 import os
+import json
 from bs4 import BeautifulSoup as bs
 
 class Article:
@@ -22,3 +23,7 @@ class Article:
 				print(self.text, file = resfile)
 			except OSError:
 				print ("Couldn't create a file")
+
+	def make_json(self):
+		if not self.iserror:
+			file = json.dumps({"website": self.website, "title": self.title, "text": self.text})
