@@ -13,6 +13,7 @@ class TheGuardianScraper:
 		page = requests.get(url)
 		soup = bs(page.content, 'html.parser')
 		headings = soup.find_all('a', class_="js-headline-text")
+		stories = []
 		for item in headings:
 			if item != None:
 				link = self.make_url(item['href'])
@@ -22,7 +23,9 @@ class TheGuardianScraper:
 				if (not "/live/" in link) and (not "/gallery/" in link) and (not "/audio/" in link):  
 					print(link)
 					story = self.scrape_article(link)
-					story.print_to_file()
+					stories.append(story)
+
+		return stories
 
 	def scrape_article(self, url):
 		try:

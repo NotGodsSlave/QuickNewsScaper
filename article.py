@@ -11,6 +11,9 @@ class Article:
 		self.iserror = iserror
 		self.error_message = error_message
 
+	def make_filename(self, extension="txt"):
+		return "./articles/{0}-{1}.{2}".format(self.website,self.title.replace(" ","-").replace('/','-'),extension)
+
 	def print_to_file(self):
 		if self.iserror:
 			print(self.error_message)
@@ -18,12 +21,16 @@ class Article:
 			try:
 				if not os.path.isdir("./articles"):
 					os.mkdir("./articles")
-				resfile = open("./articles/{0}-{1}.txt".format(self.website,self.title.replace(" ","-")), 'w')
+				resfile = open(self.make_filename(), 'w')
 				print(self.title+"\n\n", file = resfile)
 				print(self.text, file = resfile)
 			except OSError:
 				print ("Couldn't create a file")
 
-	def make_json(self):
+	def make_json(self, filename=None):
 		if not self.iserror:
-			file = json.dumps({"website": self.website, "title": self.title, "text": self.text})
+			jsn = json.dumps({"website": self.website, "title": self.title, "text": self.text})
+			if filename != None:
+				with open(filename, 'w') as file:
+					json.dump({"website": self.website, "title": self.title, "text": self.text}, file)
+			return jsn

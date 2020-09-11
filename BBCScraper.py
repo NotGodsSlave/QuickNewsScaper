@@ -13,6 +13,7 @@ class BBCScraper:
 		page = requests.get(url)
 		soup = bs(page.content, 'html.parser')
 		headings = soup.find_all('a', class_="gs-c-promo-heading")
+		stories = []
 		for item in headings:
 			link = self.make_url(item['href'])
 			"""
@@ -21,7 +22,8 @@ class BBCScraper:
 			if (not "/live/" in link) and (not "/play/" in link) and (not "/earth/" in link) and (not "/travel/" in link) and (not "/video/" in link) and (not "/programmes/" in link):  
 				print(link)
 				story = self.scrape_article(link)
-				story.print_to_file()
+				stories.append(story)
+		return stories
 
 	def scrape_article(self, url):
 		try:

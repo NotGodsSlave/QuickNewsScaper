@@ -17,8 +17,16 @@ else:
 
 bbcscraper = BBCScraper()
 guardianscraper = TheGuardianScraper()
+jsons = []
 if websites:
 	if "BBC" in websites:
-		bbcscraper.scrape_news()
+		bbcstories = bbcscraper.scrape_news()
 	if "TheGuardian" in websites:
-		guardianscraper.scrape_news()
+		guardianstories = guardianscraper.scrape_news()
+
+for item in bbcstories:
+	jsons.append(item.make_json(item.make_filename("json")))
+for item in guardianstories:
+	jsons.append(item.make_json(item.make_filename("json")))
+
+print("Scraped {0} articles".format(len(jsons)))
