@@ -29,7 +29,7 @@ class Article:
 
 	def make_json(self, filename=None, to_print=False):
 		if not self.iserror:
-			jsn = json.dumps({"website": self.website, "title": self.title, "text": self.text})
+			jsn = json.dumps({"website": self.website, "title": self.title, "text": self.text}, ensure_ascii=False)
 			if filename != None:
 				with open(filename, 'w') as file:
 					json.dump({"website": self.website, "title": self.title, "text": self.text}, file)

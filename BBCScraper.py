@@ -9,21 +9,24 @@ class BBCScraper:
 		self.base_url = "https://www.bbc.com"
 
 	def scrape_news(self):
-		url = self.base_url+"/news"
-		page = requests.get(url)
-		soup = bs(page.content, 'html.parser')
-		headings = soup.find_all('a', class_="gs-c-promo-heading")
-		stories = []
-		for item in headings:
-			link = self.make_url(item['href'])
-			"""
-			Some of the entries on BBC are either not news or video/audio/live coverage and therefore do not interest us
-			"""
-			if (not "/live/" in link) and (not "/play/" in link) and (not "/earth/" in link) and (not "/travel/" in link) and (not "/video/" in link) and (not "/programmes/" in link):  
-				#print(link)
-				story = self.scrape_article(link)
-				stories.append(story)
-		return stories
+		try:
+			url = self.base_url+"/news"
+			page = requests.get(url)
+			soup = bs(page.content, 'html.parser')
+			headings = soup.find_all('a', class_="gs-c-promo-heading")
+			stories = []
+			for item in headings:
+				link = self.make_url(item['href'])
+				"""
+				Some of the entries on BBC are either not news or video/audio/live coverage and therefore do not interest us
+				"""
+				if (not "/live/" in link) and (not "/play/" in link) and (not "/earth/" in link) and (not "/travel/" in link) and (not "/video/" in link) and (not "/programmes/" in link):  
+					#print(link)
+					story = self.scrape_article(link)
+					stories.append(story)
+			return stories
+		except:
+			print("Couldn't scrape {0}'s main page".format(self.website))
 
 	def scrape_article(self, url):
 		try:

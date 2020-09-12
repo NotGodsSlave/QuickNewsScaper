@@ -9,23 +9,26 @@ class TheGuardianScraper:
 		self.base_url = "https://www.theguardian.com/"
 
 	def scrape_news(self):
-		url = self.base_url+'/international'
-		page = requests.get(url)
-		soup = bs(page.content, 'html.parser')
-		headings = soup.find_all('a', class_="js-headline-text")
-		stories = []
-		for item in headings:
-			if item != None:
-				link = self.make_url(item['href'])
-				"""
-				Excluding live coverage, audio and photo galleries links
-				"""
-				if (not "/live/" in link) and (not "/gallery/" in link) and (not "/audio/" in link):  
-					#print(link)
-					story = self.scrape_article(link)
-					stories.append(story)
+		try:
+			url = self.base_url+'/international'
+			page = requests.get(url)
+			soup = bs(page.content, 'html.parser')
+			headings = soup.find_all('a', class_="js-headline-text")
+			stories = []
+			for item in headings:
+				if item != None:
+					link = self.make_url(item['href'])
+					"""
+					Excluding live coverage, audio and photo galleries links
+					"""
+					if (not "/live/" in link) and (not "/gallery/" in link) and (not "/audio/" in link):  
+						#print(link)
+						story = self.scrape_article(link)
+						stories.append(story)
 
-		return stories
+			return stories
+		except:
+			print("Couldn't scrape {0}'s main page".format(self.website))
 
 	def scrape_article(self, url):
 		try:
