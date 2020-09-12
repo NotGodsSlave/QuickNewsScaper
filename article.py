@@ -27,10 +27,12 @@ class Article:
 			except OSError:
 				print ("Couldn't create a file")
 
-	def make_json(self, filename=None):
+	def make_json(self, filename=None, to_print=False):
 		if not self.iserror:
 			jsn = json.dumps({"website": self.website, "title": self.title, "text": self.text})
 			if filename != None:
 				with open(filename, 'w') as file:
 					json.dump({"website": self.website, "title": self.title, "text": self.text}, file)
+			if to_print:
+				print(jsn)
 			return jsn

@@ -20,7 +20,7 @@ class BBCScraper:
 			Some of the entries on BBC are either not news or video/audio/live coverage and therefore do not interest us
 			"""
 			if (not "/live/" in link) and (not "/play/" in link) and (not "/earth/" in link) and (not "/travel/" in link) and (not "/video/" in link) and (not "/programmes/" in link):  
-				print(link)
+				#print(link)
 				story = self.scrape_article(link)
 				stories.append(story)
 		return stories

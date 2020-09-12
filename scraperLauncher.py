@@ -9,24 +9,38 @@ if len(sys.argv) == 1:
 	websites = ["BBC", "TheGuardian"]
 
 elif sys.argv[1] == "help":
-	print("Run this script to scrape articles from the available websites. Currently TheGuardian and BBC are available. If you want to scrape only some of these websites, specify them as a command line argument")
+	print("Run this script to scrape articles from the available websites. Currently TheGuardian and BBC are available.\nIf you want to scrape only some of these websites, specify them as a command line argument.\nBy default articles are outputed as json files, if you want to output them in command line, please use \"cmdoutput\" argument")
+
+elif sys.argv[1] == "cmdoutput":
+	websites = ["BBC", "TheGuardian", "cmdoutput"]
 
 else:
 	websites = sys.argv[1:]
 
+args = []
+for item in websites:
+	args.append(item.lower())
 
 bbcscraper = BBCScraper()
 guardianscraper = TheGuardianScraper()
 jsons = []
-if websites:
-	if "BBC" in websites:
+bbcstories = []
+guardianstories = []
+if args:
+	if "bbc" in args:
 		bbcstories = bbcscraper.scrape_news()
-	if "TheGuardian" in websites:
+	if "theguardian" in args:
 		guardianstories = guardianscraper.scrape_news()
 
-for item in bbcstories:
-	jsons.append(item.make_json(item.make_filename("json")))
-for item in guardianstories:
-	jsons.append(item.make_json(item.make_filename("json")))
+if not "cmdoutput" in args:
+	for item in bbcstories:
+		jsons.append(item.make_json(item.make_filename("json"), False))
+	for item in guardianstories:
+		jsons.append(item.make_json(item.make_filename("json"), False))
+else:
+	for item in bbcstories:
+		jsons.append(item.make_json(None, True))
+	for item in guardianstories:
+		jsons.append(item.make_json(None, True))
 
 print("Scraped {0} articles".format(len(jsons)))

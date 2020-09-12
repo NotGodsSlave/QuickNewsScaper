@@ -21,7 +21,7 @@ class TheGuardianScraper:
 				Excluding live coverage, audio and photo galleries links
 				"""
 				if (not "/live/" in link) and (not "/gallery/" in link) and (not "/audio/" in link):  
-					print(link)
+					#print(link)
 					story = self.scrape_article(link)
 					stories.append(story)
 
