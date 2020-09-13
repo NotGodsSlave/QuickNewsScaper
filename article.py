@@ -15,6 +15,12 @@ class Article:
 	def make_filename(self, extension="txt"):
 		return "./articles/{0}-{1}.{2}".format(self.website,self.title.replace(" ","-").replace('/','-'),extension)
 
+	def make_dict(self):
+		return {"website": self.website,
+				"title": self.title,
+				"text": self.text
+		}
+
 	def print_to_file(self):
 		if self.iserror:
 			print(self.error_message)

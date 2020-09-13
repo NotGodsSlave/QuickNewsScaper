@@ -39,11 +39,13 @@ if not "cmdoutput" in args:
 	for item in guardianstories:
 		jsons.append(item.make_json(item.make_filename("json")))
 else:
+	articles = []
 	for item in bbcstories:
-		jsons.append(item.make_json())
+		articles.append(item)
 	for item in guardianstories:
-		jsons.append(item.make_json())
-	json_list = json.dumps(jsons, ensure_ascii=False)
+		articles.append(item)
+	json_list = json.dumps([item.make_dict() for item in articles], ensure_ascii=False).encode('utf-8')
 
-print(json_list)
-print("Scraped {0} articles".format(len(jsons)))
+print(json_list.decode())
+#print(jsons)
+#print("Scraped {0} articles".format(len(jsons)))
