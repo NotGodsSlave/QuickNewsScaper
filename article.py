@@ -11,6 +11,7 @@ class Article:
 		self.iserror = iserror
 		self.error_message = error_message
 
+
 	def make_filename(self, extension="txt"):
 		return "./articles/{0}-{1}.{2}".format(self.website,self.title.replace(" ","-").replace('/','-'),extension)
 
@@ -27,12 +28,10 @@ class Article:
 			except OSError:
 				print ("Couldn't create a file")
 
-	def make_json(self, filename=None, to_print=False):
+	def make_json(self, filename=None):
 		if not self.iserror:
 			jsn = json.dumps({"website": self.website, "title": self.title, "text": self.text}, ensure_ascii=False)
 			if filename != None:
 				with open(filename, 'w') as file:
 					json.dump({"website": self.website, "title": self.title, "text": self.text}, file)
-			if to_print:
-				print(jsn)
 			return jsn

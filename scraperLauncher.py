@@ -1,6 +1,7 @@
 from article import Article
 from TheGuardianScraper import TheGuardianScraper
 from BBCScraper import BBCScraper
+import json
 import sys
 
 websites = []
@@ -34,13 +35,15 @@ if args:
 
 if not "cmdoutput" in args:
 	for item in bbcstories:
-		jsons.append(item.make_json(item.make_filename("json"), False))
+		jsons.append(item.make_json(item.make_filename("json")))
 	for item in guardianstories:
-		jsons.append(item.make_json(item.make_filename("json"), False))
+		jsons.append(item.make_json(item.make_filename("json")))
 else:
 	for item in bbcstories:
-		jsons.append(item.make_json(None, True))
+		jsons.append(item.make_json())
 	for item in guardianstories:
-		jsons.append(item.make_json(None, True))
+		jsons.append(item.make_json())
+	json_list = json.dumps(jsons, ensure_ascii=False)
 
+print(json_list)
 print("Scraped {0} articles".format(len(jsons)))
